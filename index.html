@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to C++ Programming</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #f5f5f5;
+        }
+        header {
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        nav {
+            background-color: #333;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 20px;
+        }
+        nav a {
+            text-decoration: none;
+            color: #fff;
+        }
+        main {
+            margin: 20px 0;
+        }
+        article {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        figure {
+            margin: 20px 0;
+            text-align: center;
+        }
+        figcaption {
+            font-style: italic;
+            margin-top: 10px;
+            color: #666;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        audio, video {
+            width: 100%;
+            margin: 20px 0;
+        }
+        footer {
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .multimedia-section {
+            margin: 30px 0;
+        }
+        code {
+            background-color: #f8f8f8;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        pre {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #ddd;
+        }
+        .media-error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            display: none;
+        }
+        .media-loading {
+            color: #004085;
+            background-color: #cce5ff;
+            border: 1px solid #b8daff;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        figure img, figure video, figure audio {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        /* Enhanced styles for better UX */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .loading.active {
+            display: block;
+        }
+        
+        .loading::after {
+            content: "Loading...";
+            display: inline-block;
+            animation: dots 1.5s infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: "Loading.  "; }
+            40% { content: "Loading.. "; }
+            60% { content: "Loading..."; }
+            90%, 100% { content: "Loading.  "; }
+        }
+        
+        /* Responsive design improvements */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            pre {
+                font-size: 14px;
+            }
+        }
+        
+        /* Accessibility improvements */
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            z-index: 999;
+            padding: 1em;
+            background-color: #000;
+            color: white;
+            opacity: 0;
+        }
+        
+        .skip-link:focus {
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 1;
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a1a;
+                color: #f5f5f5;
+            }
+            
+            article, section {
+                background-color: #2d2d2d;
+            }
+            
+            code, pre {
+                background-color: #3d3d3d;
+                color: #f5f5f5;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle media errors
+            const mediaElements = document.querySelectorAll('img, video, audio');
+            mediaElements.forEach(element => {
+                element.addEventListener('error', function() {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'media-error';
+                    errorDiv.textContent = `Error loading ${element.tagName.toLowerCase()} content. Please check the file exists and is accessible.`;
+                    element.parentNode.insertBefore(errorDiv, element.nextSibling);
+                });
+                
+                if (element.tagName === 'VIDEO' || element.tagName === 'AUDIO') {
+                    const loadingDiv = document.createElement('div');
+                    loadingDiv.className = 'media-loading';
+                    loadingDiv.textContent = 'Loading media...';
+                    element.parentNode.insertBefore(loadingDiv, element);
+                    
+                    element.addEventListener('loadeddata', function() {
+                        loadingDiv.style.display = 'none';
+                    });
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header role="banner">
+        <h1>Getting Started with C++ Programming</h1>
+        <nav role="navigation" aria-label="Main navigation">
+            <ul>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#basic-syntax">Basic Syntax</a></li>
+                <li><a href="#variables">Variables</a></li>
+                <li><a href="#control-flow">Control Flow</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main">
+        <article id="introduction">
+            <h2>Introduction to C++</h2>
+            <p>Welcome to our comprehensive guide on C++ programming. This resource will help you understand the fundamentals of C++ programming language.</p>
+        </article>
+
+        <section id="basic-syntax" class="multimedia-section">
+            <h2>Basic C++ Syntax</h2>
+            <figure>
+                <div class="loading" id="syntax-loading">Loading diagram...</div>
+                <img src="media/cpp-syntax.svg" 
+                     alt="Diagram showing basic C++ program structure including header files, main function, and variable declarations"
+                     onload="document.getElementById('syntax-loading').style.display='none'"
+                     onerror="handleMediaError(this, 'syntax-error')"
+                     width="800"
+                     height="400">
+                <div class="media-error" id="syntax-error">
+                    Failed to load the syntax diagram. Please refresh the page or contact support.
+                </div>
+                <figcaption>Basic structure of a C++ program</figcaption>
+            </figure>
+            <pre><code>#include &lt;iostream&gt;
+
+int main() {
+    std::cout << "Hello, World!" << std::endl;
+    return 0;
+}</code></pre>
+        </section>
+
+        <section id="variables" class="multimedia-section">
+            <h2>Variables in C++</h2>
+            <div class="loading" id="audio-loading">Loading audio explanation...</div>
+            <audio controls
+                   onloadstart="document.getElementById('audio-loading').style.display='block'"
+                   oncanplay="document.getElementById('audio-loading').style.display='none'"
+                   onerror="handleMediaError(this, 'audio-error')">
+                <source src="media/cpp-variables.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <div class="media-error" id="audio-error">
+                Failed to load the audio explanation. Please refresh the page or try a different browser.
+            </div>
+            <pre><code>int number = 42;         // Integer
+double pi = 3.14159;    // Double-precision floating point
+char grade = 'A';       // Character
+bool isActive = true;   // Boolean
+string name = "John";   // String (requires #include &lt;string&gt;)</code></pre>
+        </section>
+
+        <section id="control-flow" class="multimedia-section">
+            <h2>Control Flow</h2>
+            <div class="loading" id="video-loading">Loading video tutorial...</div>
+            <video controls
+                   onloadstart="document.getElementById('video-loading').style.display='block'"
+                   oncanplay="document.getElementById('video-loading').style.display='none'"
+                   onerror="handleMediaError(this, 'video-error')">
+                <source src="media/cpp-control-flow.mp4" type="video/mp4">
+                Your browser does not support the video element.
+            </video>
+            <div class="media-error" id="video-error">
+                Failed to load the video tutorial. Please refresh the page or try a different browser.
+            </div>
+        </section>
+
+        <aside>
+            <h3>Pro Tips</h3>
+            <ul>
+                <li>Always initialize your variables</li>
+                <li>Use meaningful variable names</li>
+                <li>Include proper comments in your code</li>
+                <li>Remember to compile your code with a C++ compiler</li>
+            </ul>
+        </aside>
+    </main>
+
+    <footer role="contentinfo">
+        <address>
+            Created by: Programming Education Team<br>
+            Contact: <a href="mailto:cpp.education@example.com" style="color: #fff;">cpp.education@example.com</a>
+        </address>
+    </footer>
+
+    <script>
+        function handleMediaError(element, errorId) {
+            element.style.display = 'none';
+            document.getElementById(errorId).style.display = 'block';
+        }
+
+        // Add smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add keyboard navigation support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelector('.skip-link').focus();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background -->
+    <rect width="100%" height="100%" fill="#f8f9fa"/>
+    
+    <!-- Header Files Section -->
+    <g transform="translate(50, 30)">
+        <rect width="700" height="80" rx="5" fill="#e9ecef" stroke="#495057" stroke-width="2"/>
+        <text x="20" y="30" font-family="Arial" font-size="16" fill="#212529">Header Files</text>
+        <text x="40" y="55" font-family="monospace" font-size="14" fill="#495057">#include &lt;iostream&gt;</text>
+        <text x="40" y="75" font-family="monospace" font-size="14" fill="#495057">#include &lt;string&gt;</text>
+    </g>
+
+    <!-- Main Function Section -->
+    <g transform="translate(50, 130)">
+        <rect width="700" height="220" rx="5" fill="#e9ecef" stroke="#495057" stroke-width="2"/>
+        <text x="20" y="30" font-family="Arial" font-size="16" fill="#212529">Main Function</text>
+        <text x="40" y="55" font-family="monospace" font-size="14" fill="#495057">int main() {</text>
+        
+        <!-- Variables Section inside Main -->
+        <g transform="translate(60, 70)">
+            <rect width="580" height="100" rx="5" fill="#fff" stroke="#6c757d" stroke-width="1"/>
+            <text x="20" y="30" font-family="Arial" font-size="14" fill="#495057">Variables Declaration</text>
+            <text x="40" y="55" font-family="monospace" font-size="14" fill="#495057">int number = 42;</text>
+            <text x="40" y="75" font-family="monospace" font-size="14" fill="#495057">std::string text = "Hello";</text>
+        </g>
+
+        <text x="40" y="200" font-family="monospace" font-size="14" fill="#495057">    return 0;</text>
+        <text x="40" y="220" font-family="monospace" font-size="14" fill="#495057">}</text>
+    </g>
+
+    <!-- Arrows -->
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#495057"/>
+        </marker>
+    </defs>
+    <line x1="400" y1="110" x2="400" y2="130" stroke="#495057" stroke-width="2" marker-end="url(#arrowhead)"/>
+</svg>

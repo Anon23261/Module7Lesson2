@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate C++ Syntax Diagram</title>
+</head>
+<body>
+    <canvas id="cppSyntax" width="800" height="400"></canvas>
+    <script>
+        const canvas = document.getElementById('cppSyntax');
+        const ctx = canvas.getContext('2d');
+
+        // Set background
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, 800, 400);
+
+        // Draw title
+        ctx.font = 'bold 24px Arial';
+        ctx.fillStyle = '#333';
+        ctx.fillText('Basic C++ Program Structure', 250, 40);
+
+        // Draw boxes and arrows
+        function drawBox(x, y, width, height, text) {
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x, y, width, height);
+            
+            ctx.font = '16px Arial';
+            ctx.fillStyle = '#333';
+            const lines = text.split('\n');
+            const lineHeight = 20;
+            lines.forEach((line, index) => {
+                ctx.fillText(line, x + 10, y + 25 + (index * lineHeight));
+            });
+        }
+
+        // Draw arrow
+        function drawArrow(fromX, fromY, toX, toY) {
+            ctx.beginPath();
+            ctx.moveTo(fromX, fromY);
+            ctx.lineTo(toX, toY);
+            ctx.strokeStyle = '#333';
+            ctx.stroke();
+
+            // Arrow head
+            const angle = Math.atan2(toY - fromY, toX - fromX);
+            ctx.beginPath();
+            ctx.moveTo(toX, toY);
+            ctx.lineTo(toX - 10 * Math.cos(angle - Math.PI / 6), toY - 10 * Math.sin(angle - Math.PI / 6));
+            ctx.moveTo(toX, toY);
+            ctx.lineTo(toX - 10 * Math.cos(angle + Math.PI / 6), toY - 10 * Math.sin(angle + Math.PI / 6));
+            ctx.stroke();
+        }
+
+        // Draw program structure
+        drawBox(50, 80, 200, 60, '#include statements\n(Header files)');
+        drawBox(50, 180, 200, 60, 'using namespace std;\n(Optional)');
+        drawBox(50, 280, 200, 80, 'int main() {\n    // Your code here\n    return 0;\n}');
+
+        // Draw arrows
+        drawArrow(150, 140, 150, 180);
+        drawArrow(150, 240, 150, 280);
+
+        // Add explanations
+        ctx.font = '14px Arial';
+        ctx.fillStyle = '#666';
+        ctx.fillText('Include necessary libraries', 260, 110);
+        ctx.fillText('Declare namespace (optional)', 260, 210);
+        ctx.fillText('Main function - program entry point', 260, 320);
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+In C++, variables are containers for storing data values. Each variable has a specific data type that determines what kind of data it can store. The most common data types include:
+
+1. Integer (int): Used for whole numbers like 42 or -17
+2. Double: For decimal numbers like 3.14159 or -0.001
+3. Character (char): For single characters like 'A' or '7'
+4. Boolean (bool): For true/false values
+5. String (string): For text like "Hello World"
+
+When declaring variables, you must specify the data type followed by the variable name. For example:
+int age = 25;
+This creates an integer variable named 'age' and assigns it the value 25.
+
+Remember to always initialize your variables to prevent undefined behavior in your programs.

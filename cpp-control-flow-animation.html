@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>C++ Control Flow Animation</title>
+    <style>
+        canvas {
+            border: 1px solid #ccc;
+            margin: 20px;
+        }
+        body {
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="flowCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('flowCanvas');
+        const ctx = canvas.getContext('2d');
+        let animationFrame = 0;
+        let currentExample = 0;
+        const examples = [
+            {
+                title: "If Statement",
+                code: `if (x > 10) {
+    cout << "Greater than 10";
+} else {
+    cout << "Less than or equal to 10";
+}`,
+                explanation: "Executes different code based on a condition"
+            },
+            {
+                title: "For Loop",
+                code: `for (int i = 0; i < 5; i++) {
+    cout << i << endl;
+}`,
+                explanation: "Repeats code a specific number of times"
+            },
+            {
+                title: "While Loop",
+                code: `while (condition) {
+    // Loop body
+    // Executes while condition is true
+}`,
+                explanation: "Repeats code while a condition is true"
+            }
+        ];
+
+        function clearCanvas() {
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function drawTitle(text) {
+            ctx.font = 'bold 28px Arial';
+            ctx.fillStyle = '#333';
+            ctx.fillText(text, 50, 50);
+        }
+
+        function drawCode(code, y) {
+            ctx.font = '16px Courier New';
+            ctx.fillStyle = '#0066cc';
+            code.split('\n').forEach((line, index) => {
+                ctx.fillText(line, 50, y + (index * 24));
+            });
+        }
+
+        function drawExplanation(text, y) {
+            ctx.font = '18px Arial';
+            ctx.fillStyle = '#666';
+            ctx.fillText(text, 50, y);
+        }
+
+        function drawFlowArrows(example) {
+            ctx.strokeStyle = '#44aa44';
+            ctx.lineWidth = 2;
+            
+            switch(example.title) {
+                case "If Statement":
+                    // Draw decision diamond
+                    ctx.beginPath();
+                    ctx.moveTo(400, 200);
+                    ctx.lineTo(450, 250);
+                    ctx.lineTo(400, 300);
+                    ctx.lineTo(350, 250);
+                    ctx.closePath();
+                    ctx.stroke();
+                    
+                    // Draw arrows
+                    drawArrow(400, 300, 400, 350);
+                    drawArrow(450, 250, 500, 250);
+                    break;
+                    
+                case "For Loop":
+                    // Draw loop circle
+                    ctx.beginPath();
+                    ctx.arc(400, 250, 50, 0, Math.PI * 2);
+                    ctx.stroke();
+                    
+                    // Draw arrow
+                    drawArrow(400, 300, 400, 350);
+                    break;
+                    
+                case "While Loop":
+                    // Draw loop arrow
+                    ctx.beginPath();
+                    ctx.arc(400, 250, 50, -Math.PI/2, Math.PI, false);
+                    ctx.stroke();
+                    drawArrow(400, 300, 400, 200);
+                    break;
+            }
+        }
+
+        function drawArrow(fromX, fromY, toX, toY) {
+            const headLength = 10;
+            const angle = Math.atan2(toY - fromY, toX - fromX);
+            
+            ctx.beginPath();
+            ctx.moveTo(fromX, fromY);
+            ctx.lineTo(toX, toY);
+            ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI/6), toY - headLength * Math.sin(angle - Math.PI/6));
+            ctx.moveTo(toX, toY);
+            ctx.lineTo(toX - headLength * Math.cos(angle + Math.PI/6), toY - headLength * Math.sin(angle + Math.PI/6));
+            ctx.stroke();
+        }
+
+        function animate() {
+            clearCanvas();
+            
+            const example = examples[currentExample];
+            
+            drawTitle(example.title);
+            drawCode(example.code, 100);
+            drawExplanation(example.explanation, 500);
+            drawFlowArrows(example);
+            
+            animationFrame++;
+            if (animationFrame > 120) { // Change example every 2 seconds (60fps)
+                animationFrame = 0;
+                currentExample = (currentExample + 1) % examples.length;
+            }
+            
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
